@@ -8,8 +8,9 @@ import * as d3 from 'd3';
 
 function App() {
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(new Map());
   const container = useRef(null);
+  const [hourlyData, setHourlyData] = useState([]);
 
   useEffect(() => {
     //start and end epochs of efiiwe processing
@@ -35,9 +36,10 @@ function App() {
     let reverseIntervals = timeIntervals.reverse();
     const { counterHistory } = json;
     let result = new Map();
+    let specifics = new Array();
     if (json.counterHistory != null) {
       let arrayOfTimeStamps = json.counterHistory.map(v => new Date(v.timestamp).getTime());
-      for (let i = startTime; i < endTime; i = i + unitTime){
+      for (let i = startTime; i < (startTime + unitTime * 12); i = i + unitTime){
         for (let j = 0; j < arrayOfTimeStamps.length; j++){
           if (arrayOfTimeStamps[j] > i && arrayOfTimeStamps[j] < i+unitTime) {
             //console.log(i, 'here');
@@ -50,14 +52,36 @@ function App() {
             }
         }
       }
-      // d3.select(container)
-      //   .append('p')
-      //   .text('Hello');
+
+      let count = { car: 0, truck: 0, person: 0, bus: 0, motorbike: 0, bicycle: 0, };
+      for (let [key, value] of result) {
+        for (let i = 0; i < value.length; i++) {
+          if(value[i].name === "car"){count.car++}
+          if (value[i].name === "truck") { count.truck++}
+          if(value[i].name === "person"){count.person++}
+          if(value[i].name === "bus"){count.bus++}
+          if(value[i].name === "motorbike"){count.motorbike++}
+          if (value[i].name === "bicycle") { count.bicycle++ }
+          if (i === value.length - 1) {
+            specifics.push(count);
+            console.log(key,count);
+            count = {
+              car: 0,
+              truck: 0,
+              person: 0,
+              bus: 0,
+              motorbike: 0,
+              bicycle: 0,
+            };
+          }
+        }
+      }
+      setHourlyData(specifics);
     }
   },[])
   return (
     <div ref={container} className="App">
-      {/* <div>{`${data}`}</div> */}
+      <div>{`${JSON.stringify(hourlyData)}`}</div>
     </div>
   );
 }
