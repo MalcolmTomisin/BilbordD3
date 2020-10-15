@@ -50,11 +50,13 @@ function App() {
             }
         }
       }
-      //setData(Array.from(result));
+      // d3.select(container)
+      //   .append('p')
+      //   .text('Hello');
     }
   },[])
   return (
-    <div className="App">
+    <div ref={container} className="App">
       {/* <div>{`${data}`}</div> */}
     </div>
   );
