@@ -1,3 +1,7 @@
+## About BilbordD3
+
+This repository has an algorithm that calculates hourly records from exported data from [lab opendatacam](https://github.com/MalcolmTomisin/lab-opendatacam)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -66,8 +70,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-
-
-## TODO
-
-Use D3 to visualize data sets
